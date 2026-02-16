@@ -8,7 +8,7 @@ const userSchema = new Schema({
     },
     name: String,
     profile: String,
-    DoB: Date,
+    DoB: String,
     bio: String,
     posts: [
         {

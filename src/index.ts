@@ -1,13 +1,8 @@
 import { Hono } from "hono";
-import { connectDB } from "./db/mongo";
-import { User } from "./Models/User";
-
-await connectDB();
+import userRouter from "./routes/user.route";
 
 const app = new Hono();
 
-app.get("/", (c) => {
-    return c.text("Hello Hono!");
-});
+app.route("/users", userRouter);
 
 export default app;
