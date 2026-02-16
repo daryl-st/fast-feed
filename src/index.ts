@@ -1,9 +1,13 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { connectDB } from "./db/mongo";
+import { User } from "./Models/User";
 
-const app = new Hono()
+await connectDB();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono();
 
-export default app
+app.get("/", (c) => {
+    return c.text("Hello Hono!");
+});
+
+export default app;
