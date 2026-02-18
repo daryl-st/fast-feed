@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
-import { connectDB } from "@/config/mongo";
-
-await connectDB();
 
 enum reaction {
     "LIKE",
@@ -35,11 +32,6 @@ const userSchema = new Schema({
 export const User = model("User", userSchema);
 
 const reactionSchema = new Schema({
-    id: {
-        type: Number,
-        unique: true,
-        required: true,
-    },
     react: String,
     user: {
         type: Schema.Types.ObjectId,
@@ -47,7 +39,8 @@ const reactionSchema = new Schema({
     }
 });
 
-export const Reactions = model("Reactions", reactionSchema);
+// i might not need this after all, since it's embedded no reason to create a model (document)
+export const Reactions = model("Reactions", reactionSchema); 
 
 const postSchema = new Schema({
     id: {
@@ -63,7 +56,7 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-    reactions: [reactionSchema],
+    reactions: [reactionSchema], // this means it's embedded 
 })
 
 export const Post = model("Post", postSchema);
@@ -82,85 +75,4 @@ export const Comments = model("Comments", new Schema({
         type: Schema.Types.ObjectId,
         ref: "Post",
     }
-}));
-
-// const lucyPostId = await Post.findOne({content: "Lucy first post"}).select("_id");
-
-// const comment = await Comments.create({
-//     id: 1,
-//     content: 'Not alone Lucy!',
-//     post: lucyPostId!._id,
-// });
-// const comment = await Comments.find().populate("post");
-
-// console.log(comment);
-
-// const user = await User.create({
-//     id: 2,
-//     username: 'lucy',
-//     name: 'Lucy',
-//     DoB: '2003-12-01',
-//     bio: 'Figuring out Nightcity by my self.'
-// });
-
-// console.log(user);
-
-// const userId = await User.find({name: 'Lucy'}).select('_id');
-// const post2 = await Post.create({
-//     id: 3,
-//     content: 'Lucy first post',
-//     user: userId[0]._id,
-// })
-
-// console.log(post2);
-// const user = await User.find({id: 1});
-// const name = user[0]._id;
-// const updatedPost = await Post.updateOne({user: name}, {content: "Again! Updated Post"});
-// const post = await Post.find().populate('user');
-// console.log(post);
-
-// const reactions = await Reactions.create({
-//     id: 1,
-//     react: 'like',
-//     user: userId[0]._id,
-// })
-
-// const react = new Reactions({
-//     id: 1,
-//     react: 'like',
-//     user: userId[0]._id,
-// })
-
-// const updatePost = await Post.updateOne({user: userId[0]._id}, {reactions: [react]});
-// console.log(updatePost);
-
-// const reactions = await Post.findOne({"reactions.react": 'like'}).populate('reactions.user').select('reactions.user');
-// console.log(reactions);
-// const postSchema = new Schema({
-//     id: {
-//         type: Number,
-//         unique: true,
-//     },
-//     content: String,
-
-//     user: {
-//         type: Schema.Types.ObjectId,
-//         ref: "User",
-//         required: true,
-//     },
-
-//     comment: {
-//         content: String,
-//         reactions: {
-//             type: Schema.Types.ObjectId,
-//             ref: "Reaction",
-//         },
-//     },
-
-//     reactions: {
-//         type: Schema.Types.ObjectId,
-//         ref: "Reactions",
-//     },
-// });
-
-// export const Post = model("Post", postSchema);
+})); // might need to include user here coz we need to know who commented

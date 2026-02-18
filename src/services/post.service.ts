@@ -1,32 +1,66 @@
 import { connectDB } from "@/config/mongo";
-import { User } from "@/Models/User";
+import { Comments, Post, Reactions, User } from "@/Models/Post";
+import { getUserIdfromName } from "./user.service";
 
 await connectDB();
 
-export const createPostService = async (data: any) => {
+export const createPostService = async (data: any, id: any) => {
     try {
-        const postData = {
-            content: 'post',
-            reactions: 'like',
-            comments: {
-                content: 'comment',
-                reactions: 'heart',
-            }
-        }
-        const post = await User.updateOne(
-            { username: data.username }, 
-            { 
-                $push: {
-                    'posts.$.comments': {
-                        content: "great post",
-                        reactions: [],
-                    }
-                }
-            }
-        );
-        console.log(post);
+        const post = await Post.create({
+            id: data.id,
+            content: data.content,
+            user: id,
+        })
 
         return post;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const getAllPosts = async () => {
+    try {
+        // const users = await User.find();
+        const posts = await Post.find().populate('user');
+        return posts;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const getPostbyUserId = async (data: any) => {
+    try {
+        const post = await Post.find({user: data}).populate('user');
+        return post;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const reactOnAPost = async (data: any) => {
+    try {
+        const userId = await getUserIdfromName('Darnell');
+        const react = new Reactions({
+            react: 'like',
+            user: userId
+        })
+        const post = await Post.updateOne({_id: data}, {reactions: react});
+
+        return post;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const commentOnAPost = async (data: any, post: any) => {
+    try {
+        const comment = await Comments.create({
+            id: data.id,
+            content: data.content,
+            post: post[0]._id
+        });
+
+        return comment;
     } catch (err) {
         console.error(err);
     }
