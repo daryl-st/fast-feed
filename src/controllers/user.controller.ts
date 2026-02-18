@@ -1,4 +1,9 @@
-import { getAllUsers, createUser, updateUser } from "@/services/user.services";
+import {
+    getAllUsers,
+    createUser,
+    updateUser,
+    getOneUser,
+} from "@/services/user.service";
 import type { Context } from "hono";
 
 export const getUsers = async (c: Context) => {
@@ -6,6 +11,19 @@ export const getUsers = async (c: Context) => {
         const data = await getAllUsers();
 
         return c.json({ message: "Success", data: data }, 200);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export const getUserById = async (c: Context) => {
+    console.log("here");
+    try {
+        const username = c.req.param("name");
+        console.log(username);
+        const data = await getOneUser(username);
+
+        return c.json({ data: data }, 200);
     } catch (err) {
         console.error(err);
     }

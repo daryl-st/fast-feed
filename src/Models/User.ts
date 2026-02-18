@@ -5,27 +5,38 @@ const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
+        required: true,
     },
-    name: String,
+    name: {
+        type: String,
+        required: true,
+    },
     profile: String,
-    DoB: String,
+    DoB: {
+        type: String,
+        required: true,
+    },
     bio: String,
     posts: [
         {
-            content: String,
+            content: {
+                type: String,
+                required: true,
+            },
             reactions: [
                 {
                     react: ["like", "clap", "heart"],
-                    count: Number,
                 },
             ],
             comments: [
                 {
-                    content: String,
+                    content: {
+                        type: String,
+                        required: true,
+                    },
                     reactions: [
                         {
                             react: ["like", "clap", "heart"],
-                            count: Number,
                         },
                     ],
                 },

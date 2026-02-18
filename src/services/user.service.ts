@@ -12,6 +12,15 @@ export const getAllUsers = async () => {
     }
 };
 
+export const getOneUser = async (data: any) => {
+    try {
+        const user = await User.findOne({ username: data.username });
+        return user;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 export const createUser = async (data: any) => {
     // need refactoring for any
     try {
