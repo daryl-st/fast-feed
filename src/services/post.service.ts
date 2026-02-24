@@ -54,13 +54,16 @@ export const reactOnAPost = async (data: any) => {
 
 export const commentOnAPost = async (data: any, post: any) => {
     try {
-        const comment = await Comments.create({
+        const userId = await getUserIdfromName('Darnell');
+        const comment = new Comments({
             id: data.id,
             content: data.content,
-            post: post[0]._id
-        });
+            user: userId,
+        })
 
-        return comment;
+        const updatedPost = await Post.updateOne({_id: post[0]._id}, {comments: comment});
+
+        return updatedPost;
     } catch (err) {
         console.error(err);
     }

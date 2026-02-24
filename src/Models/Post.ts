@@ -42,6 +42,25 @@ const reactionSchema = new Schema({
 // i might not need this after all, since it's embedded no reason to create a model (document)
 export const Reactions = model("Reactions", reactionSchema); 
 
+const commentSchema = new Schema({
+    id: {
+        type: Number,
+        unique: true,
+        required: true,
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    reactions: [reactionSchema],
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }
+})
+
+export const Comments = model("Comments", commentSchema);
+
 const postSchema = new Schema({
     id: {
         type: Number,
@@ -56,23 +75,8 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-    reactions: [reactionSchema], // this means it's embedded 
+    comments: [commentSchema], // Both comments and reactions embedded
+    reactions: [reactionSchema], 
 })
 
 export const Post = model("Post", postSchema);
-
-export const Comments = model("Comments", new Schema({
-    id: {
-        type: Number,
-        unique: true,
-        required: true,
-    },
-    content: {
-        type: String,
-        required: true
-    },
-    post: {
-        type: Schema.Types.ObjectId,
-        ref: "Post",
-    }
-})); // might need to include user here coz we need to know who commented

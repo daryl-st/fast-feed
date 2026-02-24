@@ -53,7 +53,7 @@ export const react = async (c: Context) => {
 export const comment = async (c: Context) => {
     try {
         const comment = await c.req.json();
-        const userId = await getUserIdfromName("Lucy");
+        const userId = await getUserIdfromName("Darnell");
         const post = await getPostbyUserId(userId); // it's hard to figure out on which post to comment
         const data = await commentOnAPost(comment, post);
 

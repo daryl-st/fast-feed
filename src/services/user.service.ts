@@ -43,7 +43,7 @@ export const createUser = async (data: any) => {
 
         return user;
     } catch (err) {
-        console.error("Error occured while fetching data.");
+        console.error("Error occured while fetching data.", err);
     }
 };
 

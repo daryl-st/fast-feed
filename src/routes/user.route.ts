@@ -8,9 +8,9 @@ import { Hono } from "hono";
 
 const userRouter = new Hono();
 
-userRouter.get("/users", getUsers);
-userRouter.post("/users", createNewUser);
-userRouter.put("/users", updateUserInfo);
-userRouter.get("/users/:name", getUserById); // doesn't work
+userRouter.get("/", getUsers);
+userRouter.post("/", createNewUser);
+userRouter.put("/", updateUserInfo);
+userRouter.get("/:name", getUserById); // doesn't work
 
 export default userRouter;
