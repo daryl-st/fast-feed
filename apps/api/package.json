@@ -1,0 +1,23 @@
+{
+  "name": "api-fast-feed",
+  "version": "0.1.1",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "build": "bun build ./src/index.ts --outdir ./dist",
+    "lint": "tsc --noEmit",
+    "start": "bun run dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "better-auth": "^1.4.19",
+    "hono": "^4.11.9",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.2.1"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/bun": "latest",
+    "typescript": "^5.9.3"
+  }
+}
