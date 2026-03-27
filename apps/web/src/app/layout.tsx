@@ -5,6 +5,8 @@ import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+// we will deal about responsiveness later
+// import { ResponsiveSidebar } from '@/components/layout/ResponsiveSidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 

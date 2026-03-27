@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Bell, HelpCircle } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
@@ -19,10 +20,12 @@ export function Header() {
         </div>
         
         <div className="h-8 w-8 rounded-full border border-white/10 p-[1px]">
+          <Link key="Dashboard" href="/dashboard" >
           <Avatar className="h-full w-full">
             <AvatarImage src="/profile.jpg" alt="User Profile" />
-            <AvatarFallback className="bg-zinc-800 text-[10px]">AS</AvatarFallback>
+            <AvatarFallback className="bg-zinc-800 text-[10px]">A</AvatarFallback>
           </Avatar>
+          </Link>
         </div>
       </div>
     </header>

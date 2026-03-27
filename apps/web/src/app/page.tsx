@@ -1,28 +1,31 @@
-import { ProfileHeader } from '@/components/dashboard/ProfileHeader'
-import { StatsCards } from '@/components/dashboard/StatsCards'
-import { AccountInfo } from '@/components/dashboard/AccountInfo'
-import { SystemPrefs } from '@/components/dashboard/SystemPrefs'
-import { Container } from '@/components/shared/Container'
+import { ContextualSidebar } from "@/components/home/ContextualSideBar";
+import { CreatePost } from "@/components/home/CreatePost";
+import { InfiniteFeed } from "@/components/home/InfiniteFeed";
+import { PostCard } from "@/components/home/PostCard";
 
-export default function DashboardPage() {
+// Needs massive refactoring
+export default function HomePage() {
   return (
-    <Container>
-      <div className="space-y-6">
-        <ProfileHeader />
-        <StatsCards />
-        <div className="grid grid-cols-12 gap-16">
-          {/* Left Column: Form (7/12) */}
-          <div className="col-span-12 lg:col-span-7">
-            <AccountInfo />
-          </div>
-
-          {/* Right Column: Preferences (5/12) */}
-          <div className="col-span-12 lg:col-span-5">
-            <SystemPrefs />
-          </div>
+    <div className="flex justify-center w-full min-h-screen">
+      <div className="w-full max-w-150">
+        <CreatePost /> {/* Will change this later */}
+        
+        <div className="space-y-4">
+          <PostCard 
+            author="Alex Rivera"
+            role="SENIOR ARCHITECT"
+            time="2H AGO"
+            codeTag="Auth.js"
+            content="Just integrated the new module into the ActivityEngine core. The latency dropped by nearly 40% across all edge nodes. Precision is the new velocity."
+            images={["/tech-visual.jpg"]}
+          />
+          {/* This is rally good */}
+          <InfiniteFeed />
         </div>
       </div>
-    </Container>
+
+      {/* This sidebar only appears on large screens */}
+      <ContextualSidebar />
+    </div>
   )
 }
-
