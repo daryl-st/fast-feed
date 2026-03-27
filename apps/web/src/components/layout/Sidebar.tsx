@@ -1,90 +1,52 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Home, Compass, Bell, Settings, Zap, PlusCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { useEffect, useRef } from 'react'
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Home, Compass, Bell, Settings, Plus } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 const navItems = [
-  { name: 'HOME', href: '/', icon: Home },
-  { name: 'EXPLORE', href: '/explore', icon: Compass },
-  { name: 'NOTIFICATIONS', href: '/notifications', icon: Bell },
-  { name: 'SETTINGS', href: '/settings', icon: Settings },
+  { name: "Home", href: "/", icon: Home },
+  { name: "Explore", href: "/explore", icon: Compass },
+  { name: "Notifications", href: "/notifications", icon: Bell },
+  { name: "Settings", href: "/settings", icon: Settings },
 ]
 
 export function Sidebar() {
   const pathname = usePathname()
-  const sidebarRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sidebarRef.current) {
-        const rect = sidebarRef.current.getBoundingClientRect()
-        const x = ((e.clientX - rect.left) / rect.width) * 100
-        const y = ((e.clientY - rect.top) / rect.height) * 100
-        sidebarRef.current.style.setProperty('--x', `${x}%`)
-        sidebarRef.current.style.setProperty('--y', `${y}%`)
-      }
-    }
-
-    const sidebar = sidebarRef.current
-    if (sidebar) {
-      sidebar.addEventListener('mousemove', handleMouseMove)
-      return () => sidebar.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [])
-
-  const handleNewEvent = () => {
-    console.log('Create new event')
-  }
 
   return (
-    <aside 
-      ref={sidebarRef}
-      className="w-64 flex flex-col h-screen sticky top-0 glass-effect relative overflow-hidden"
-      style={{ background: 'rgba(28, 27, 29, 0.6)' }}
-    >
-      {/* Spotlight effect overlay */}
-      <div className="spotlight-glow absolute inset-0 pointer-events-none" />
-      
-      <div className="p-6 relative z-10">
-        <div className="flex items-center gap-2">
-          <Zap className="w-6 h-6 text-primary" />
-          <span className="text-xl font-bold text-primary tracking-tight">ActivityEngine</span>
-        </div>
-        <p className="text-xs text-zinc-400 mt-1 uppercase tracking-wide">V1.0.4</p>
+    <aside className="fixed left-0 top-0 h-full w-64 z-40 bg-[#1c1b1d]/60 backdrop-blur-md border-r border-white/10 flex flex-col py-8 px-4 shadow-2xl">
+      <div className="mb-10 px-4">
+        <h1 className="text-xl font-black text-white tracking-tighter">ActivityEngine</h1>
+        <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1 font-bold">v1.0.4</p>
       </div>
-      
-      <nav className="flex-1 px-4 space-y-1 relative z-10">
+
+      <nav className="flex-1 space-y-1">
         {navItems.map((item) => {
           const isActive = pathname === item.href
-          const Icon = item.icon
-          
           return (
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-200 ${
-                isActive
-                  ? 'bg-surface-bright/20 text-primary'
-                  : 'text-zinc-400 hover:bg-surface/30 hover:text-zinc-200'
-              }`}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 transition-all duration-300 rounded-md group",
+                isActive 
+                  ? "bg-gradient-to-r from-white/10 to-transparent border-l-2 border-white text-white shadow-[0_0_15px_rgba(255,255,255,0.05)]" 
+                  : "text-gray-500 hover:text-gray-300 hover:bg-white/5"
+              )}
             >
-              <Icon className="w-5 h-5" />
-              <span className="font-medium text-sm uppercase tracking-wide">{item.name}</span>
+              <item.icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
+              <span className="text-xs tracking-wide uppercase font-bold">{item.name}</span>
             </Link>
           )
         })}
       </nav>
-      
-      <div className="p-4 mt-auto relative z-10">
-        <Button 
-          onClick={handleNewEvent}
-          className="w-full bg-primary text-on-primary hover:bg-zinc-200 hover-scale transition-all duration-200 shadow-ambient"
-        >
-          <PlusCircle className="w-4 h-4 mr-2" />
-          NEW EVENT
+
+      <div className="pt-4 mt-auto border-t border-white/5">
+        <Button className="w-full bg-white text-black hover:bg-gray-200 text-xs font-black uppercase tracking-widest py-6 rounded-md transition-transform active:scale-95">
+          New Event
         </Button>
       </div>
     </aside>

@@ -1,54 +1,27 @@
-import { TrendingUp, Minus } from 'lucide-react'
+// import { TrendingUp, Minus } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
 
 const stats = [
-  {
-    label: 'TOTALS POSTS',
-    value: '142',
-    change: '+12%',
-    trend: 'up' as const,
-  },
-  {
-    label: 'ENGAGEMENT RATE',
-    value: '4.8%',
-    change: '+0.4',
-    trend: 'up' as const,
-  },
-  {
-    label: 'PROFILE VIEWS',
-    value: '2.4k',
-    change: 'Stable',
-    trend: 'neutral' as const,
-  }
+  { label: "Total Posts", value: "142", trend: "+12%", color: "text-emerald-500" },
+  { label: "Engagement Rate", value: "4.8%", trend: "+0.4", color: "text-emerald-500" },
+  { label: "Profile Views", value: "2.4k", trend: "Stable", color: "text-gray-500" },
 ]
 
 export function StatsCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
       {stats.map((stat) => (
-        <div
-          key={stat.label}
-          className="bg-surface-low rounded-lg p-6 border border-outline-variant/10 hover:border-outline-variant/20 transition-all duration-200"
-        >
-          <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">
-            {stat.label}
-          </p>
-          <div className="flex items-baseline justify-between">
-            <p className="text-3xl font-bold text-primary tracking-tight">
-              {stat.value}
+        <Card key={stat.label} className="bg-[#1c1b1d] border-white/5 hover:border-white/20 transition-all">
+          <CardContent className="p-6">
+            <p className="text-[10px] text-gray-500 font-bold tracking-widest uppercase mb-4">
+              {stat.label}
             </p>
-            <div
-              className={`flex items-center gap-1 text-xs ${
-                stat.trend === 'up'
-                  ? 'text-success'
-                  : 'text-zinc-500'
-              }`}
-            >
-              {stat.trend === 'up' && <TrendingUp className="w-3 h-3" />}
-              {stat.trend === 'neutral' && <Minus className="w-3 h-3" />}
-              <span>{stat.change}</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-4xl font-black">{stat.value}</span>
+              <span className={`text-xs font-bold ${stat.color}`}>{stat.trend}</span>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   )

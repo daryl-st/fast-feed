@@ -1,29 +1,28 @@
-'use client'
-
-import { Bell, Search, User } from 'lucide-react'
+import { Bell, HelpCircle } from "lucide-react"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
 export function Header() {
   return (
-    <header className="border-b border-outline-variant/10 bg-background/50 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search events..."
-              className="w-full pl-10 pr-4 py-2 bg-surface-low rounded-md border border-outline-variant/10 focus:border-primary/30 focus:outline-none transition-all duration-200 text-sm text-zinc-200 placeholder:text-zinc-500"
-            />
-          </div>
+    <header className="fixed top-0 right-0 left-64 h-16 z-30 bg-[#131315]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-10 shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+      <div className="flex items-center gap-4">
+        <span className="text-white font-semibold tracking-tight text-md">Profile Settings</span>
+      </div>
+
+      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 text-gray-400">
+          <button className="hover:text-white transition-colors">
+            <Bell className="w-5 h-5" />
+          </button>
+          <button className="hover:text-white transition-colors">
+            <HelpCircle className="w-5 h-5" />
+          </button>
         </div>
         
-        <div className="flex items-center gap-2">
-          <button className="p-2 rounded-md hover:bg-surface/30 transition-colors">
-            <Bell className="w-5 h-5 text-zinc-400" />
-          </button>
-          <button className="flex items-center gap-2 p-2 rounded-md hover:bg-surface/30 transition-colors">
-            <User className="w-5 h-5 text-zinc-400" />
-          </button>
+        <div className="h-8 w-8 rounded-full border border-white/10 p-[1px]">
+          <Avatar className="h-full w-full">
+            <AvatarImage src="/profile.jpg" alt="User Profile" />
+            <AvatarFallback className="bg-zinc-800 text-[10px]">AS</AvatarFallback>
+          </Avatar>
         </div>
       </div>
     </header>
